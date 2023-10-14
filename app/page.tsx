@@ -37,15 +37,15 @@ const useSpeech = () => {
       console.log("Got final result:", finalTranscript);
     }
   }, [interimTranscript, finalTranscript]);
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return null;
-  }
+  // if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+  //   return null;
+  // }
 
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log(
-      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
-    );
-  }
+  // if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+  //   console.log(
+  //     "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
+  //   );
+  // }
   const listenContinuously = () => {
     SpeechRecognition.startListening({
       continuous: true,
