@@ -102,7 +102,14 @@ export default function Home() {
       </div>
 
       <div>{message}</div>
-      <Textarea value={transcript} placeholder="Type your message here." />
+      <Textarea
+        value={transcript}
+        placeholder={
+          listening
+            ? "Start speaking..."
+            : 'Click on "Listen" and start speaking'
+        }
+      />
     </div>
   );
 }
