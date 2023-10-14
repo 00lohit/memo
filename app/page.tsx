@@ -6,7 +6,12 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-export default function Home() {
+import { ModeToggle } from "@/components/custom/theme-provider";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
+const useSpeech = () => {
   const [message, setMessage] = useState("");
   const commands = [
     {
@@ -46,26 +51,45 @@ export default function Home() {
       language: "en-IN",
     });
   };
+
+  const stopListening = () => SpeechRecognition.stopListening();
+
+  return {
+    resetTranscript,
+    listenContinuously,
+    stopListening,
+    message,
+    transcript,
+    listening,
+  };
+};
+
+export default function Home() {
+  const {
+    resetTranscript,
+    listenContinuously,
+    stopListening,
+    message,
+    transcript,
+    listening,
+  } = useSpeech();
+
   return (
     <div>
+      <div className="">
+        <ModeToggle />
+      </div>
+
       <div>
-        <span>listening: {listening ? "on" : "off"}</span>
+        <Label>listening: {listening ? "on" : "off"}</Label>
         <div>
-          <button type="button" onClick={resetTranscript}>
-            Reset
-          </button>
-          <button type="button" onClick={listenContinuously}>
-            Listen
-          </button>
-          <button type="button" onClick={SpeechRecognition.stopListening}>
-            Stop
-          </button>
+          <Button onClick={resetTranscript}>Reset</Button>
+          <Button onClick={listenContinuously}>Listen</Button>
+          <Button onClick={stopListening}>Stop</Button>
         </div>
       </div>
       <div>{message}</div>
-      <div>
-        <span>{transcript}</span>
-      </div>
+      <Textarea value={transcript} placeholder="Type your message here." />
     </div>
   );
 }
