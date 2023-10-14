@@ -10,6 +10,7 @@ import { ModeToggle } from "@/components/custom/theme-provider";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Mic, MicOff } from "lucide-react";
 
 const useSpeech = () => {
   const [message, setMessage] = useState("");
@@ -75,19 +76,31 @@ export default function Home() {
   } = useSpeech();
 
   return (
-    <div>
-      <div className="">
+    <div className="p-4">
+      <div className="fixed right-4 top-4">
         <ModeToggle />
       </div>
 
-      <div>
-        <Label>listening: {listening ? "on" : "off"}</Label>
-        <div>
-          <Button onClick={resetTranscript}>Reset</Button>
-          <Button onClick={listenContinuously}>Listen</Button>
-          <Button onClick={stopListening}>Stop</Button>
-        </div>
+      <div className="mb-4">
+        <Button variant="outline" onClick={resetTranscript}>
+          Reset
+        </Button>
+        <Button
+          className="ml-4"
+          variant="outline"
+          onClick={listening ? stopListening : listenContinuously}
+        >
+          {listening ? "Stop" : "Listen"}
+          <div className="ml-2">
+            {listening ? (
+              <MicOff className="h-[1rem] w-[1.2rem] transition-all " />
+            ) : (
+              <Mic className="h-[1rem] w-[1.2rem] transition-all" />
+            )}
+          </div>
+        </Button>
       </div>
+
       <div>{message}</div>
       <Textarea value={transcript} placeholder="Type your message here." />
     </div>
